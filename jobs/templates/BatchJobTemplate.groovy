@@ -1,3 +1,5 @@
+package jobs.templates 
+
 class BatchJobTemplate {
   static job (dslFactory, Map config) {
 
@@ -232,5 +234,3 @@ if (matcher?.matches()) {
     """
   }
 }
-
-return BatchJobTemplate
