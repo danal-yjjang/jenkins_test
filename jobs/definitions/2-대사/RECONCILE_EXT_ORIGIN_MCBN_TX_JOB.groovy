@@ -1,4 +1,5 @@
-import jobs.templates.BatchJobTemplate
+def templateFile = new File('../../templates/BatchJobTemplate.groovy')
+def BatchJobTemplate = evaluate(templateFile.text)
 
 BatchJobTemplate.job(this, [
     name : '2-원천사거래대사-20-상품권(RECONCILE_EXT_ORIGIN_MCBN_TX_JOB)', 
