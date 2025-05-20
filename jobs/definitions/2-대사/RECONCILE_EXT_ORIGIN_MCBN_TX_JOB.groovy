@@ -18,7 +18,7 @@ BatchJobTemplate.job(this, [
         ], 
         [
             type : 'string', 
-            name : 'originalCompanyInstitutionCode',
+            name : 'date',
             description : '날짜'
         ]
     ], 

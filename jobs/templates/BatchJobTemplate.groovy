@@ -1,4 +1,4 @@
-package jobs.templates
+package templates
 
 class BatchJobTemplate {
   static job (dslFactory, Map config) {
@@ -95,7 +95,9 @@ sleep 60
     if (config.view) {
       def viewName = config.view
 
-      dslFactory.dslFactory.configure { project -> 
+      dslFactory.configure { project -> 
+      def viewsNode = project / views
+
         // 기존 View 찾기
         def viewNode = null
         viewsNode.children().each { node ->
@@ -104,18 +106,18 @@ sleep 60
           }
 
           if (viewNode) {
-            def jobNamesNode = viewNode / jobNames
+            def jobNamesNode = viewNode / config.name
 
             boolean jobExists = false
             jobNamesNode.children().each { job ->
-              if (job.text() == jobName) {
+              if (job.text() == config.name) {
                 jobExists = true
               }
             }
                   
             // 작업이 아직 없으면 추가
             if (!jobExists) {
-              jobNamesNode << 'string'(jobName)
+              jobNamesNode << 'string'(config.name)
             }
           } else {
             println "경고: '${config.view}' View가 존재하지 않습니다. "
@@ -124,11 +126,11 @@ sleep 60
       }
     }
 
-    retrun job
+    return job
   }
 
   static getBatchAlarScript () {
-    retrun """
+    return """
 def alarmCurl(errorCode) {
 	def env = manager.build.getEnvironment(manager.listener)
 
