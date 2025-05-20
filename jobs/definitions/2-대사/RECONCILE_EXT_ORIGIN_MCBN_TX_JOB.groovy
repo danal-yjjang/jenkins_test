@@ -136,7 +136,7 @@ def alarmCurl(errorCode) {
     def systemId = env['ALARM_SYSTEM_ID'] ?: "341"
     def appender = env['ALARM_APPENDER'] ?: "COROWN_SCH_DEV"
 
-	def command = "curl --connect-timeout 5 -G -v \\"" +alarmServer "\\" -d \\"SYSTEM_ID=" + systemId + "\\" -d \\"APPENDER=" + appender + "\\" --data-urlencode \\"ERROR_MESSAGE= $\{env['JOB_NAME']} 에러코드: \${errorCode} !! \\""
+	def command = "curl --connect-timeout 5 -G -v \\"" +alarmServer "\\" -d \\"SYSTEM_ID=" + systemId + "\\" -d \\"APPENDER=" + appender + "\\" --data-urlencode \\"ERROR_MESSAGE= \${env['JOB_NAME']} 에러코드: \${errorCode} !! \\""
     
     manager.build.keepLog(true)
 	
