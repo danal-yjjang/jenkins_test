@@ -11,7 +11,7 @@ class BatchJobTemplate {
 
     def batchExecCommand = """
 cd /home/service/smart-settlement-batch
-max_dir=\$(ls -d */ | grep -E '^[0-9]+/$' | tr -d '/' | sort -n | tail -n 1)
+max_dir=\$(ls -d */ | grep -E '^[0-9]+/\$' | tr -d '/' | sort -n | tail -n 1)
 echo ">>>>>>>>>>>>>>>> 최대 수의 디렉터리 : \$max_dir....."    
     
 java -Xms256m -Xmx1G -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/home/logs/ -XX:MaxMetaspaceSize=512m -jar /home/service/smart-settlement-batch/\${max_dir}/*.jar --job.name=${config.jobName}${paramScript}
@@ -136,7 +136,7 @@ def alarmCurl(errorCode) {
     def systemId = env['ALARM_SYSTEM_ID'] ?: "341"
     def appender = env['ALARM_APPENDER'] ?: "COROWN_SCH_DEV"
 
-	def command = "curl --connect-timeout 5 -G -v \\"" +alarmServer "\\" -d \\"SYSTEM_ID=" + systemId + "\\" -d \\"APPENDER=" + appender + "\\" --data-urlencode \\"ERROR_MESSAGE= ${env['JOB_NAME']} 에러코드: ${errorCode} !! \\""
+	def command = "curl --connect-timeout 5 -G -v \\"" +alarmServer "\\" -d \\"SYSTEM_ID=" + systemId + "\\" -d \\"APPENDER=" + appender + "\\" --data-urlencode \\"ERROR_MESSAGE= $\{env['JOB_NAME']} 에러코드: \${errorCode} !! \\""
     
     manager.build.keepLog(true)
 	
@@ -146,9 +146,9 @@ def alarmCurl(errorCode) {
 	process.consumeProcessOutput(output, error)
 	process.waitFor()
 	
-	println "Alarm Output: ${output.toString()}"
+	println "Alarm Output: \${output.toString()}"
 	if (error) {
-		println "Curl Error : ${error.toString()}"
+		println "Curl Error : \${error.toString()}"
 	}
 }
 
