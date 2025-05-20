@@ -1,4 +1,4 @@
-import templates.BatchJobTemplate
+import jobs.templates.BatchJobTemplate
 
 BatchJobTemplate.job(this, [
     name : '2-원천사거래대사-20-상품권(RECONCILE_EXT_ORIGIN_MCBN_TX_JOB)', 

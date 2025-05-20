@@ -1,4 +1,4 @@
-package templates
+package jobs.templates
 
 class BatchJobTemplate {
   static job (dslFactory, Map config) {
