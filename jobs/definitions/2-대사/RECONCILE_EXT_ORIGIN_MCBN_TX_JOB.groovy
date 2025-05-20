@@ -1,4 +1,4 @@
-def templateFile = new File('../../templates/BatchJobTemplate.groovy')
+def templateFile = new File('jobs/templates/BatchJobTemplate.groovy')
 def BatchJobTemplate = evaluate(templateFile.text)
 
 BatchJobTemplate.job(this, [
