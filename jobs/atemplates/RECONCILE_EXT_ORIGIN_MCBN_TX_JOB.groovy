@@ -1,4 +1,6 @@
-BatchJobTemplate.job(this, [
+def template = evaluate(readFileFromWorkspace('BatchJobTemplate.groovy'))
+
+template.job(this, [
     name : '(test) 2-원천사거래대사-20-상품권(RECONCILE_EXT_ORIGIN_MCBN_TX_JOB)', 
     jobName : 'RECONCILE_EXT_ORIGIN_MCBN_TX_JOB', 
     parameters : [
