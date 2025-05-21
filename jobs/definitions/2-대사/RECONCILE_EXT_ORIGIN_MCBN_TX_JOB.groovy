@@ -5,7 +5,7 @@ class BatchJobTemplate {
 
     if (config.parameters) {
       config.parameters.each { param ->
-        paramScript += " ${param.name}=\$${param.name}"
+        paramScript += """[ -n "\$${param.name}" ] && PARAMS+=" ${param.name}=\$${param.name}"\n"""
       }
     }
 

@@ -7,7 +7,7 @@ class BatchJobTemplate {
 
     if (config.parameters) {
       config.parameters.each { param ->
-        paramScript += " ${param.name}=\$${param.name}"
+        paramScript += """[ -n "\$${param.name}" ] && PARAMS+=" ${param.name}=\$${param.name}"\n"""
       }
     }
 
@@ -134,13 +134,13 @@ sleep 60
 def alarmCurl(errorCode) {
 	def env = manager.build.getEnvironment(manager.listener)
 
-    def alarmServer = env['ALARM_SERVER_URL'] ?: "http://172.16.233.33/~auth/AlarmGW"
-    def systemId = env['ALARM_SYSTEM_ID'] ?: "341"
-    def appender = env['ALARM_APPENDER'] ?: "COROWN_SCH_DEV"
+  def alarmServer = env['ALARM_SERVER_URL'] ?: "http://172.16.233.33/~auth/AlarmGW"
+  def systemId = env['ALARM_SYSTEM_ID'] ?: "341"
+  def appender = env['ALARM_APPENDER'] ?: "COROWN_SCH_DEV"
 
-	def command = "curl --connect-timeout 5 -G -v \\"" +alarmServer "\\" -d \\"SYSTEM_ID=" + systemId + "\\" -d \\"APPENDER=" + appender + "\\" --data-urlencode \\"ERROR_MESSAGE= $\{env['JOB_NAME']} 에러코드: \${errorCode} !! \\""
+	def command = "curl --connect-timeout 5 -G -v \"" + alarmServer + "/~auth/AlarmGW\" -d \"SYSTEM_ID=" + systemId + "\" -d \"APPENDER=" + appender + "\" --data-urlencode \"ERROR_MESSAGE= \${env['JOB_NAME']} 에러코드: \${errorCode} !! \""
     
-    manager.build.keepLog(true)
+  manager.build.keepLog(true)
 	
 	def process = ['bash', '-c', command].execute()
 	def output = new StringBuffer()
