@@ -7,7 +7,7 @@ on:
 
 jobs:
   call :
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
       - name: Call Jenkins
         run: |
