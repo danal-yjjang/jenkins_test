@@ -1,5 +1,3 @@
-package jobs.templates 
-
 class BatchJobTemplate {
   static job (dslFactory, Map config) {
 
@@ -91,40 +89,40 @@ sleep 60
       }
     }
 
-    // view 추가가
-    if (config.view) {
-      def viewName = config.view
+    // // view 추가가
+    // if (config.view) {
+    //   def viewName = config.view
 
-      dslFactory.configure { project -> 
-      def viewsNode = project / views
+    //   dslFactory.configure { project -> 
+    //   def viewsNode = project / views
 
-        // 기존 View 찾기
-        def viewNode = null
-        viewsNode.children().each { node ->
-          if (node.name.text() == config.viewName) {
-            viewNode = node
-          }
+    //     // 기존 View 찾기
+    //     def viewNode = null
+    //     viewsNode.children().each { node ->
+    //       if (node.name.text() == config.viewName) {
+    //         viewNode = node
+    //       }
 
-          if (viewNode) {
-            def jobNamesNode = viewNode / config.name
+    //       if (viewNode) {
+    //         def jobNamesNode = viewNode / config.name
 
-            boolean jobExists = false
-            jobNamesNode.children().each { job ->
-              if (job.text() == config.name) {
-                jobExists = true
-              }
-            }
+    //         boolean jobExists = false
+    //         jobNamesNode.children().each { job ->
+    //           if (job.text() == config.name) {
+    //             jobExists = true
+    //           }
+    //         }
                   
-            // 작업이 아직 없으면 추가
-            if (!jobExists) {
-              jobNamesNode << 'string'(config.name)
-            }
-          } else {
-            println "경고: '${config.view}' View가 존재하지 않습니다. "
-          }
-        }
-      }
-    }
+    //         // 작업이 아직 없으면 추가
+    //         if (!jobExists) {
+    //           jobNamesNode << 'string'(config.name)
+    //         }
+    //       } else {
+    //         println "경고: '${config.view}' View가 존재하지 않습니다. "
+    //       }
+    //     }
+    //   }
+    // }
 
     return job
   }
@@ -234,3 +232,5 @@ if (matcher?.matches()) {
     """
   }
 }
+
+return BatchJobTemplate
