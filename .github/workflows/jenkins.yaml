@@ -6,7 +6,9 @@ on:
   workflow_dispatch:
 
 jobs:
-  steps:
-    - name: Call Jenkins
-      run: |
-        curl -kv telnet://192.168.136.73:7010
+  call :
+    runs-on: self-hosted
+    steps:
+      - name: Call Jenkins
+        run: |
+          curl -kv telnet://192.168.136.73:7010
