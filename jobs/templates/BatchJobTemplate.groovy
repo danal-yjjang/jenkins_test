@@ -93,7 +93,7 @@ sleep 60
     def viewName = config.view
 
     dslFactory.configure { project -> 
-    def viewsNode = project / views
+      def viewsNode = project / views
 
       // 기존 View 찾기
       def viewNode = null
@@ -107,8 +107,8 @@ sleep 60
         def jobsNode = viewNode / jobNames
 
         boolean jobExists = false
-        jobsNode.children().each { job ->
-          if (job.text() == config.name) {
+        jobsNode.children().each { jobItem ->  // 변수명 변경
+          if (jobItem.text() == config.name) {
             jobExists = true
           }
         }
