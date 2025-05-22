@@ -18,7 +18,7 @@ template.job(this, [
         [
             type : 'string', 
             name : 'workSize',
-            defaultValue : '5'
+            defaultValue : '5',
             description : '병렬처리 수'
         ]
     ], 
