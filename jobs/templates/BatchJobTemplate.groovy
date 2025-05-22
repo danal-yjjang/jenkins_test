@@ -92,29 +92,26 @@ sleep 60
   if (config.view) {
     def viewName = config.view
 
-    try {
-      // View 생성 또는 업데이트
-      dslFactory.listView(viewName) {
-        // 기존 작업을 유지하면서 새 작업 추가
-        jobs {
-          names(jobName)
-        }
-        
-        // View 기본 설정
-        columns {
-          status()
-          weather()
-          name()
-          lastSuccess()
-          lastFailure()
-          lastDuration()
-          buildButton()
-        }
+
+    // View 생성 또는 업데이트
+    dslFactory.listView(viewName) {
+      // 기존 작업을 유지하면서 새 작업 추가
+      jobs {
+        names(jobName)
       }
-    } catch (Exception e) {
-      println "View '${viewName}' 업데이트 중 오류 발생: ${e.message}"
-      // 오류가 발생해도 작업 생성은 영향 없음
+      
+      // View 기본 설정
+      columns {
+        status()
+        weather()
+        name()
+        lastSuccess()
+        lastFailure()
+        lastDuration()
+        buildButton()
+      }
     }
+
   }
 
   return job
