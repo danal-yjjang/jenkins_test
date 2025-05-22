@@ -92,34 +92,28 @@ sleep 60
   if (config.view) {
     def viewName = config.view
 
-    dslFactory.configure { project -> 
-      def viewsNode = project / views
-
-      // 기존 View 찾기
-      def viewNode = null
-      viewsNode.children().each { node ->
-        if (node.name.text() == viewName) {
-          viewNode = node
+    try {
+      // View 생성 또는 업데이트
+      dslFactory.listView(viewName) {
+        // 기존 작업을 유지하면서 새 작업 추가
+        jobs {
+          names(jobName)
+        }
+        
+        // View 기본 설정
+        columns {
+          status()
+          weather()
+          name()
+          lastSuccess()
+          lastFailure()
+          lastDuration()
+          buildButton()
         }
       }
-
-      if (viewNode) {
-        def jobsNode = viewNode / jobNames
-
-        boolean jobExists = false
-        jobsNode.children().each { jobItem ->  // 변수명 변경
-          if (jobItem.text() == config.name) {
-            jobExists = true
-          }
-        }
-              
-        // 작업이 아직 없으면 추가
-        if (!jobExists) {
-          jobsNode << 'string'(config.name)
-        }
-      } else {
-        println "경고: '${config.view}' View가 존재하지 않습니다. "
-      }
+    } catch (Exception e) {
+      println "View '${viewName}' 업데이트 중 오류 발생: ${e.message}"
+      // 오류가 발생해도 작업 생성은 영향 없음
     }
   }
 
