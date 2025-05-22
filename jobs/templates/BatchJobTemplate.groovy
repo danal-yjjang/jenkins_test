@@ -88,31 +88,18 @@ sleep 60
     }
   }
 
-  // view 추가가
-  if (config.view) {
-    def viewName = config.view
-
-
-    // View 생성 또는 업데이트
-    dslFactory.listView(viewName) {
-      // 기존 작업을 유지하면서 새 작업 추가
-      jobs {
-        names(jobName)
-      }
-      
-      // View 기본 설정
-      columns {
-        status()
-        weather()
-        name()
-        lastSuccess()
-        lastFailure()
-        lastDuration()
-        buildButton()
-      }
-    }
-
-  }
+  // // view 추가가
+  // if (config.view) {
+  //   // ViewManager 작업 트리거
+  //   downstream('ViewManager', 'SUCCESS') {
+  //     // ViewManager에 필요한 파라미터 전달
+  //     parameters {
+  //       predefinedProp('JOB_NAME', config.name)
+  //       predefinedProp('VIEW_NAME', config.view)
+  //       predefinedProp('ACTION', 'ADD')
+  //     }
+  //   }
+  // }
 
   return job
 }
