@@ -7,7 +7,7 @@ template.job(this, [
         [
             type : 'string', 
             name : 'month',
-            defaultValue : '\$(date -d "yesterday" +"%Y-%m")'
+            defaultValue : '\$(date -d "yesterday" +"%Y-%m")',
             description : '2024-06'
         ], 
         [
