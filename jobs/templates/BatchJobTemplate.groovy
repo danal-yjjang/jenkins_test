@@ -88,18 +88,78 @@ sleep 60
     }
   }
 
-  // // view 추가가
-  // if (config.view) {
-  //   // ViewManager 작업 트리거
-  //   downstream('ViewManager', 'SUCCESS') {
-  //     // ViewManager에 필요한 파라미터 전달
-  //     parameters {
-  //       predefinedProp('JOB_NAME', config.name)
-  //       predefinedProp('VIEW_NAME', config.view)
-  //       predefinedProp('ACTION', 'ADD')
-  //     }
-  //   }
-  // }
+  // view 추가가
+  if (config.view) {
+    groovyPostBuild {
+      script("""
+import jenkins.model.Jenkins
+import hudson.model.ListView
+
+def jobName = "${config.name}"
+def viewName = "${config.view}"
+
+try {
+  def jenkins = Jenkins.getInstance()
+  def view = jenkins.getView(viewName)
+  def needsViewUpdate = false
+  
+  if (!view) {
+    manager.listener.logger.println("View '\${viewName}'가 존재하지 않습니다. ViewManager를 호출합니다.")
+    needsViewUpdate = true
+  } else if (view instanceof ListView) {
+    def job = jenkins.getItem(jobName)
+    if (job && !((ListView)view).contains(job)) {
+      manager.listener.logger.println("작업 '\${jobName}'이 View '\${viewName}'에 없습니다. ViewManager를 호출합니다.")
+      needsViewUpdate = true
+    } else {
+      manager.listener.logger.println("작업 '\${jobName}'이 이미 View '\${viewName}'에 있습니다. ViewManager 호출을 건너뜁니다.")
+    }
+  } else {
+    manager.listener.logger.println("'\${viewName}'은 ListView가 아닙니다. ViewManager를 호출합니다.")
+    needsViewUpdate = true
+  }
+  
+  // ViewManager 호출 필요한 경우에만 트리거
+  if (needsViewUpdate) {
+    def build = manager.build
+    def cause = new hudson.model.Cause.UpstreamCause(build)
+    def paramAction = new hudson.model.ParametersAction([
+      new hudson.model.StringParameterValue('JOB_NAME', jobName),
+      new hudson.model.StringParameterValue('VIEW_NAME', viewName),
+      new hudson.model.StringParameterValue('ACTION', 'ADD')
+    ])
+    
+    def viewManagerJob = jenkins.getItem('ViewManager')
+    if (viewManagerJob) {
+      def future = viewManagerJob.scheduleBuild2(0, cause, paramAction)
+      manager.listener.logger.println("ViewManager 작업이 스케줄되었습니다.")
+    } else {
+      manager.listener.logger.println("경고: ViewManager 작업을 찾을 수 없습니다.")
+    }
+  }
+  
+} catch (Exception e) {
+  manager.listener.logger.println("View 체크 중 오류 발생: \${e.getMessage()}")
+  // 오류 발생 시에는 안전하게 ViewManager 호출
+  manager.listener.logger.println("안전을 위해 ViewManager를 호출합니다.")
+  
+  def build = manager.build
+  def jenkins = Jenkins.getInstance()
+  def cause = new hudson.model.Cause.UpstreamCause(build)
+  def paramAction = new hudson.model.ParametersAction([
+    new hudson.model.StringParameterValue('JOB_NAME', jobName),
+    new hudson.model.StringParameterValue('VIEW_NAME', viewName),
+    new hudson.model.StringParameterValue('ACTION', 'ADD')
+  ])
+  
+  def viewManagerJob = jenkins.getItem('ViewManager')
+  if (viewManagerJob) {
+    viewManagerJob.scheduleBuild2(0, cause, paramAction)
+  }
+}
+  """)
+    }
+  }
 
   return job
 }
