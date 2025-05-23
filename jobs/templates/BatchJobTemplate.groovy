@@ -85,13 +85,11 @@ sleep 60
       groovyPostBuild {
         script(batchAlarmSkript)
       }
-    }
-  }
 
-  // view 추가가
-  if (config.view) {
-    groovyPostBuild {
-      script("""
+        // view 추가가
+      if (config.view) {
+        groovyPostBuild {
+          script("""
 import jenkins.model.Jenkins
 import hudson.model.ListView
 
@@ -132,6 +130,8 @@ try {
   manager.listener.logger.println("View 체크 중 오류 발생: \${e.getMessage()}")
 }
   """)
+        }
+      }
     }
   }
 
