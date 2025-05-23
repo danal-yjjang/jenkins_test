@@ -23,6 +23,12 @@ sleep 60
 
   def batchAlarmSkript = getBatchAlarScript()
 
+  // Description에 View 정보 포함
+  def description = config.description ?: config.name
+  if (config.view) {
+    description += " [VIEW:${config.view}]"
+  }
+
   def job = dslFactory.job(config.name) {
     description(config.description ?: config.name)
     
