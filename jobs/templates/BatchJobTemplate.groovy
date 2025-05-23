@@ -85,53 +85,6 @@ sleep 60
       groovyPostBuild {
         script(batchAlarmSkript)
       }
-
-        // view 추가가
-      if (config.view) {
-        groovyPostBuild {
-          script("""
-import jenkins.model.Jenkins
-import hudson.model.ListView
-
-def jobName = "${config.name}"
-def viewName = "${config.view}"
-
-try {
-  def jenkins = Jenkins.getInstance()
-  def view = jenkins.getView(viewName)
-  def job = jenkins.getItem(jobName)
-
-  // View가 없으면 생성
-  if (!view) {
-  view = new ListView(viewName)
-  jenkins.addView(view)
-  manager.listener.logger.println("알림: '${viewName}' View를 새로 생성했습니다.")
-  }
-
-  // ListView인지 확인
-  if (!(view instanceof ListView)) {
-  manager.listener.logger.println("오류: '${viewName}'은(는) ListView 타입이 아닙니다.")
-  return
-  }
-
-  def listView = (ListView)view
-
-  if (!listView.contains(job)) {
-    listView.add(job)
-    manager.listener.logger.println("작업 '${jobName}'을(를) View '${viewName}'에 추가했습니다.")
-  } else {
-    manager.listener.logger.println("알림: 작업 '${jobName}'은(는) 이미 View '${viewName}'에 있습니다.")
-  }
-
-  // 변경사항 저장
-  view.save()
-  manager.listener.logger.println("View '${viewName}' 업데이트 완료")
-} catch (Exception e) {
-  manager.listener.logger.println("View 체크 중 오류 발생: \${e.getMessage()}")
-}
-  """)
-        }
-      }
     }
   }
 
