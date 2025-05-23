@@ -110,6 +110,7 @@ sleep 60
         }
       }
     }
+  }
 
   return job
 }
