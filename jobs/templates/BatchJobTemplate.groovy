@@ -16,7 +16,7 @@ echo ">>>>>>>>>>>>>>>> 최대 수의 디렉터리 : \$max_dir....."
 PARAMS = ""
 ${paramScript}
 
-echo "$PARAMS"
+echo "\$PARAMS"
 
 java -Xms256m -Xmx1G -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/home/logs/ -XX:MaxMetaspaceSize=512m -jar /home/service/smart-settlement-batch/\${max_dir}/*.jar --job.name=${config.jobName}\${PARAMS}
 
