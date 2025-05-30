@@ -13,7 +13,12 @@ cd /home/service/smart-settlement-batch
 max_dir=\$(ls -d */ | grep -E '^[0-9]+/\$' | tr -d '/' | sort -n | tail -n 1)
 echo ">>>>>>>>>>>>>>>> 최대 수의 디렉터리 : \$max_dir....."    
   
-java -Xms256m -Xmx1G -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/home/logs/ -XX:MaxMetaspaceSize=512m -jar /home/service/smart-settlement-batch/\${max_dir}/*.jar --job.name=${config.jobName}${paramScript}
+PARAMS = ""
+${paramScript}
+
+echo PARAMS
+
+java -Xms256m -Xmx1G -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/home/logs/ -XX:MaxMetaspaceSize=512m -jar /home/service/smart-settlement-batch/\${max_dir}/*.jar --job.name=${config.jobName}PARAMS
 
 exitCodeJava=\$?
 echo ">>>>>>>>>>>>>>>> 프로세스를 종료합니다 - \$exitCodeJava"
