@@ -4,7 +4,7 @@ def job (dslFactory, Map config) {
 
   if (config.parameters) {
     config.parameters.each { param ->
-      paramScript += """[ -n "\$${param.name}" ] && PARAMS+="  ${param.name}=\$${param.name}"\n"""
+      paramScript += """[ -n "\$${param.name}" ] && PARAMS+=" -d \"${param.name}=\$${param.name}\""\n"""
     }
   }
 
@@ -12,6 +12,11 @@ def job (dslFactory, Map config) {
 cd /home/service/smart-settlement-batch
 max_dir=\$(ls -d */ | grep -E '^[0-9]+/\$' | tr -d '/' | sort -n | tail -n 1)
 echo ">>>>>>>>>>>>>>>> 최대 수의 디렉터리 : \$max_dir....."    
+
+PARAMS = ""
+${paramScript}
+
+echo "\$PARAM"
 
 echo curl -G "http://localhost:8080/v1/job-execute" -d "jobName=${config.jobName}"${paramScript}
 response=\$(curl -G "http://localhost:8080/v1/job-execute" -d "jobName=${config.jobName}"${paramScript})
