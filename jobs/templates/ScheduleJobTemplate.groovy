@@ -1,7 +1,7 @@
 def job (dslFactory, Map config) {
 
 
-  def batchExecCommand = """
+  def pipelineScript = """
 pipeline {
     agent { node { label 'ScheduleNode' } }
     stages {
