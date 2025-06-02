@@ -13,7 +13,7 @@ ${config.stages ? config.stages.collect { stage ->
     return """        stage('${stage.name}') {
             steps {
                 script {
-                    listGenerate(${stage.values ? stage.values.collect { "'${it}'" }.join(', ') : ''})    
+                    listGenerate(${stage.values ? stage.values.collect {  it == 'DATE' ? DATE : "'${it}'" }.join(', ') : ''})    
                 }
             }
         }"""
