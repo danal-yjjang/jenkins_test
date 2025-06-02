@@ -29,7 +29,7 @@ batchTemplate.job(this, [
 batchScheduleTemplate.job(this, [
     name : '(test) 2-원천사거래대사-20-상품권(RECONCILE_EXT_ORIGIN_MCBN_TX_JOB)-스케줄',
     targetJobName : '(test) 2-원천사거래대사-20-상품권(RECONCILE_EXT_ORIGIN_MCBN_TX_JOB)',
-    trigger : '* 3 * * *',
+    trigger : '* 4 * * *',
     parameters : [
         'serviceCode', 'originalCompanyInstitutionCode', 'date'
     ], 
