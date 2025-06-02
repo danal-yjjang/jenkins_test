@@ -4,6 +4,10 @@ def job (dslFactory, Map config) {
   def pipelineScript = """
 pipeline {
     agent { node { label 'ScheduleNode' } }
+
+    environment {
+        DATE = ${getFormatterDate()}
+    }
     stages {
 ${config.stages ? config.stages.collect { stage ->
     return """        stage('${stage.name}') {
@@ -24,7 +28,7 @@ def listGenerate(${config.parameters ? config.parameters.collect {param ->
         def params = []
         ${config.parameters ? config.parameters.collect { param -> 
             "params.add(string(name:'${param}', value: ${param}))"
-        }.join('\n') : ''}
+        }.join('\n        ') : ''}
         build job: '${config.targetJobName}', parameters: params
     }
 }
@@ -32,6 +36,14 @@ def listGenerate(${config.parameters ? config.parameters.collect {param ->
 
   def job = dslFactory.pipelineJob(config.name) {
     description(config.description ?: config.name)
+
+    // 기존 Job이 비활성화되어 있다면 그 상태 유지
+    if (config.preserveDisabled != false) {
+        def existingJob = jenkins.model.Jenkins.instance.getItem(config.name)
+        if (existingJob && existingJob.isDisabled()) {
+            disabled(true)
+        }
+    }
 
     // 오래된 빌드 삭제 설정
     logRotator {
@@ -82,6 +94,15 @@ def listGenerate(${config.parameters ? config.parameters.collect {param ->
   }
 
   return job
+}
+
+static getFormatterDate () {
+    def yesterday = new Date().minus(1)
+    def timeZone = TimeZone.getTimeZone('Asia/Seoul')
+    def dateFormat = new java.text.SimpleDateFormat('yyyy-MM-dd')
+    dateFormat.setTimeZone(timeZone)
+    def formattedDate = dateFormat.format(yesterday)
+    return dateFormat.format(yesterday)
 }
 
 return this

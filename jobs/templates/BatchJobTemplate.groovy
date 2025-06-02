@@ -30,6 +30,14 @@ sleep 60
 
   def job = dslFactory.job(config.name) {
     description(config.description ?: config.name)
+
+    // 기존 Job이 비활성화되어 있다면 그 상태 유지
+    if (config.preserveDisabled != false) {
+        def existingJob = jenkins.model.Jenkins.instance.getItem(config.name)
+        if (existingJob && existingJob.isDisabled()) {
+            disabled(true)
+        }
+    }
     
     // SCM 설정
     scm {
