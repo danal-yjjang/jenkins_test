@@ -95,7 +95,6 @@ sleep 60
       // Groovy Postbuild 스크립트 추가
       groovyPostBuild {
         script(batchAlarmSkript)
-        sandbox(false)
       }
     }
   }

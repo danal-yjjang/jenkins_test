@@ -64,7 +64,7 @@ def listGenerate(${config.parameters ? config.parameters.collect {param ->
     definition {
       cps {
         script(pipelineScript)
-        sandbox(false)
+        sandbox(true)
       }
     }
   }
