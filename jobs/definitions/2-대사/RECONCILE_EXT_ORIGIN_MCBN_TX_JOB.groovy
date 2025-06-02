@@ -40,5 +40,6 @@ batchScheduleTemplate.job(this, [
         [name: '컬쳐랜드상품권', values: ['CULTURE_LAND', 'CULTURE_LAND', '2024-01-01']],
         [name: '(주)문화상품권', values: ['CULTURE_GIFT', 'CULTURE_GIFT', '2024-01-02']]
     ]
+    view : '2-대사'
 ])
 

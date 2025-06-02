@@ -12,16 +12,18 @@ ${config.stages ? config.stages.collect { stage ->
                     listGenerate(${stage.values ? stage.values.collect { "'${it}'" }.join(', ') : ''})    
                 }
             }
-    }"""
+        }"""
 }.join('\n') : ''}
     }
 }
 
-def listGenerate(String serviceCode) {
+def listGenerate(${config.parameters ? config.parameters.collect {param -> 
+    return "String ${param.name}"
+}.join(' ') : ''}) {
     catchError(buildResult: 'FAILURE', stageResult: 'FAILURE'){
         def params = []
-        ${config.parameters ? config.parameters.eachWithIndex { param, index -> 
-            "        params.add(${param.type}(name:'${param.name}', value: values[${index}]))"
+        ${config.parameters ? config.parameters.collect { param -> 
+            "        params.add(${param.type}(name:'${param.name}', value: ${param.name}))"
         }.join('\n') : ''}
         build job: '${config.targetJobName}', parameters: params
     }
