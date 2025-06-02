@@ -37,7 +37,7 @@ def listGenerate(String serviceCode) {
     }
 
     // 동시 빌드 방지 설정
-    concurrentBuild(false)
+    disabled(false)
 
     // Trigger
     if (config.trigger) {
