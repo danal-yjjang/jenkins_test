@@ -53,7 +53,9 @@ def listGenerate(${config.parameters ? config.parameters.collect {param ->
         disableConcurrentBuilds()
         // Trigger
         if (config.trigger) {
-            pipelineTriggers([cron(config.trigger)])
+            pipelineTriggers([
+                cron(config.trigger)
+            ])        
         }
     }
 
