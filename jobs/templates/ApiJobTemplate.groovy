@@ -16,10 +16,10 @@ echo ">>>>>>>>>>>>>>>> 최대 수의 디렉터리 : \$max_dir....."
 PARAMS = ""
 ${paramScript}
 
-echo "\$PARAM"
+echo "\$PARAMS"
 
-echo curl -G "http://localhost:8080/v1/job-execute" -d "jobName=${config.jobName}"${paramScript}
-response=\$(curl -G "http://localhost:8080/v1/job-execute" -d "jobName=${config.jobName}"${paramScript})
+echo curl -G "http://localhost:8080/v1/job-execute" -d "jobName=${config.jobName}"\${PARAMS}
+response=\$(curl -G "http://localhost:8080/v1/job-execute" -d "jobName=${config.jobName}"\${PARAMS})
 
 
 echo "\$response"
