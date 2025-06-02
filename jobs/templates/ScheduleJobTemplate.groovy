@@ -54,7 +54,7 @@ def listGenerate(${config.parameters ? config.parameters.collect {param ->
         // Trigger
         if (config.trigger) {
             pipelineTriggers([
-                cron(config.trigger)
+                triggers.cron(config.trigger)
             ])        
         }
     }
