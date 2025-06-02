@@ -51,11 +51,12 @@ def listGenerate(${config.parameters ? config.parameters.collect {param ->
     properties {
         // 동시 빌드 방지 설정        
         disableConcurrentBuilds()
-        // Trigger
-        if (config.trigger) {
-            pipelineTriggers([
-                [$class: 'hudson.triggers.TimerTrigger', spec: config.trigger]
-            ]) 
+    }
+
+    // Trigger
+    if (config.trigger) {
+        triggers {
+            cron(config.trigger)
         }
     }
 
