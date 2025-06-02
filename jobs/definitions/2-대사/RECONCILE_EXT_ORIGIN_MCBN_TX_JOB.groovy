@@ -28,18 +28,18 @@ batchTemplate.job(this, [
 
 batchScheduleTemplate.job(this, [
     name : '(test) 2-원천사거래대사-20-상품권(RECONCILE_EXT_ORIGIN_MCBN_TX_JOB)-스케줄',
-    targetJobName : '2-원천사거래대사-20-상품권(RECONCILE_EXT_ORIGIN_MCBN_TX_JOB)',
-    trigger : '30 7 * * *',
+    targetJobName : '(test) 2-원천사거래대사-20-상품권(RECONCILE_EXT_ORIGIN_MCBN_TX_JOB)',
+    trigger : '* 3 * * *',
     parameters : [
-        [type: 'String', name : 'serviceCode'],
-        [type: 'String', name : 'originalCompanyInstitutionCode'],
-        [type: 'String', name : 'date']
+        [type: 'string', name : 'serviceCode'],
+        [type: 'string', name : 'originalCompanyInstitutionCode'],
+        [type: 'string', name : 'date']
     ], 
     stages: [
         [name: '도서문화상품권', values: ['BOOK_AND_LIFE', 'BOOK_AND_LIFE', '2024-01-01']],
         [name: '컬쳐랜드상품권', values: ['CULTURE_LAND', 'CULTURE_LAND', '2024-01-01']],
         [name: '(주)문화상품권', values: ['CULTURE_GIFT', 'CULTURE_GIFT', '2024-01-02']]
-    ]
+    ],
     view : '2-대사'
 ])
 
