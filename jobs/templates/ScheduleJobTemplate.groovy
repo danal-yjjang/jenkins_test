@@ -81,3 +81,5 @@ def listGenerate(String serviceCode) {
 
   return job
 }
+
+return this
