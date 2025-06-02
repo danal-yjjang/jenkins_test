@@ -31,9 +31,7 @@ batchScheduleTemplate.job(this, [
     targetJobName : '(test) 2-원천사거래대사-20-상품권(RECONCILE_EXT_ORIGIN_MCBN_TX_JOB)',
     trigger : '* 3 * * *',
     parameters : [
-        [type: 'string', name : 'serviceCode'],
-        [type: 'string', name : 'originalCompanyInstitutionCode'],
-        [type: 'string', name : 'date']
+        'serviceCode', 'originalCompanyInstitutionCode', 'date'
     ], 
     stages: [
         [name: '도서문화상품권', values: ['BOOK_AND_LIFE', 'BOOK_AND_LIFE', '2024-01-01']],

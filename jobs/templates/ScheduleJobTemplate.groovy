@@ -18,12 +18,12 @@ ${config.stages ? config.stages.collect { stage ->
 }
 
 def listGenerate(${config.parameters ? config.parameters.collect {param -> 
-    return "String ${param.name}"
-}.join(' ') : ''}) {
+    return "String ${param}"
+}.join(', ') : ''}) {
     catchError(buildResult: 'FAILURE', stageResult: 'FAILURE'){
         def params = []
         ${config.parameters ? config.parameters.collect { param -> 
-            "        params.add(${param.type}(name:'${param.name}', value: ${param.name}))"
+            "params.add(string(name:'${param}', value: ${param}))"
         }.join('\n') : ''}
         build job: '${config.targetJobName}', parameters: params
     }
