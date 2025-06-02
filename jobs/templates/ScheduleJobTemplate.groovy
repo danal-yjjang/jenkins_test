@@ -54,8 +54,8 @@ def listGenerate(${config.parameters ? config.parameters.collect {param ->
         // Trigger
         if (config.trigger) {
             pipelineTriggers([
-                triggers.cron(config.trigger)
-            ])        
+                [$class: 'hudson.triggers.TimerTrigger', spec: config.trigger]
+            ]) 
         }
     }
 
