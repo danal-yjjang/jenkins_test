@@ -48,15 +48,12 @@ def listGenerate(${config.parameters ? config.parameters.collect {param ->
       daysToKeep(3)
     }
 
-    // 동시 빌드 방지 설정
     properties {
+        // 동시 빌드 방지 설정        
         disableConcurrentBuilds()
-    }
-
-    // Trigger
-    if (config.trigger) {
-        triggers {
-            cron(config.trigger)
+        // Trigger
+        if (config.trigger) {
+            pipelineTriggers([cron(config.trigger)])
         }
     }
 
@@ -64,7 +61,7 @@ def listGenerate(${config.parameters ? config.parameters.collect {param ->
     definition {
       cps {
         script(pipelineScript)
-        sandbox(true)
+        sandbox(false)
       }
     }
   }
