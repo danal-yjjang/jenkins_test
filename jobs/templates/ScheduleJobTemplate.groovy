@@ -28,7 +28,7 @@ def listGenerate(String serviceCode) {
 }
   """
 
-  def job = dslFactory.job(config.name) {
+  def job = dslFactory.pipelineJob(config.name) {
     description(config.description ?: config.name)
 
     // 오래된 빌드 삭제 설정
