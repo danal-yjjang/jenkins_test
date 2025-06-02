@@ -49,7 +49,9 @@ def listGenerate(${config.parameters ? config.parameters.collect {param ->
     }
 
     // 동시 빌드 방지 설정
-    disabled(false)
+    properties {
+        disableConcurrentBuilds()
+    }
 
     // Trigger
     if (config.trigger) {
