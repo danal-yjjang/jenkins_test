@@ -186,7 +186,7 @@ if (errorFound) {
 }
 
 
-def matcher = manager.getLogMatcher(".*Exec exit status not zero\\\. Status \\\[(\\\d+)\\\].*")
+def matcher = manager.getLogMatcher(".*Exec exit status not zero\\\\. Status \\\\[(\\\\d+)\\\\].*")
 if (matcher?.matches()) {
 def exitCode = Integer.parseInt(matcher.group(1))
   if (exitCode != 0) {
