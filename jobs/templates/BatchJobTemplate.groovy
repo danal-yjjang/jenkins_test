@@ -123,26 +123,26 @@ sleep 60
 static getBatchAlarScript () {
   return """
 def alarmCurl(errorCode) {
-def env = manager.build.getEnvironment(manager.listener)
+  def env = manager.build.getEnvironment(manager.listener)
 
-def alarmServer = env['ALARM_SERVER_URL'] ?: "http://172.16.233.33"
-def systemId = env['ALARM_SYSTEM_ID'] ?: "341"
-def appender = env['ALARM_APPENDER'] ?: "COROWN_SCH_DEV"
+  def alarmServer = env['ALARM_SERVER_URL'] ?: "http://172.16.233.33"
+  def systemId = env['ALARM_SYSTEM_ID'] ?: "341"
+  def appender = env['ALARM_APPENDER'] ?: "COROWN_SCH_DEV"
 
-def command = "curl --connect-timeout 5 -G -v \\"" + alarmServer + "/~auth/AlarmGW\\" -d \\"SYSTEM_ID=" + systemId + "\\" -d \\"APPENDER=" + appender + "\\" --data-urlencode \\"ERROR_MESSAGE= \${env['JOB_NAME']} 에러코드: \${errorCode} !! \\""
+  def command = "curl --connect-timeout 5 -G -v \\"" + alarmServer + "/~auth/AlarmGW\\" -d \\"SYSTEM_ID=" + systemId + "\\" -d \\"APPENDER=" + appender + "\\" --data-urlencode \\"ERROR_MESSAGE= \${env['JOB_NAME']} 에러코드: \${errorCode} !! \\""
   
-manager.build.keepLog(true)
+  manager.build.keepLog(true)
 
-def process = ['bash', '-c', command].execute()
-def output = new StringBuffer()
-def error = new StringBuffer()
-process.consumeProcessOutput(output, error)
-process.waitFor()
+  def process = ['bash', '-c', command].execute()
+  def output = new StringBuffer()
+  def error = new StringBuffer()
+  process.consumeProcessOutput(output, error)
+  process.waitFor()
 
-println "Alarm Output: \${output.toString()}"
-if (error) {
-  println "Curl Error : \${error.toString()}"
-}
+  println "Alarm Output: \${output.toString()}"
+  if (error) {
+    println "Curl Error : \${error.toString()}"
+  }
 }
 
 manager.listener.logger.println("실패 로그 패턴 찾는 중...")
