@@ -20,7 +20,7 @@ ${config.stages ? config.stages.collect { stage ->
 def listGenerate(String serviceCode) {
     catchError(buildResult: 'FAILURE', stageResult: 'FAILURE'){
         def params = []
-        ${config.parameters ? config.parameters.eachWithIndex {
+        ${config.parameters ? config.parameters.eachWithIndex { param, index -> 
             "        params.add(${param.type}(name:'${param.name}', value: values[${index}]))"
         }.join('\n') : ''}
         build job: '${config.targetJobName}', parameters: params
