@@ -179,14 +179,14 @@ if (errorFound) {
   manager.listener.logger.println("에러발견")
   manager.listener.logger.println(errorLines)
   manager.buildFailure()
-  alarmCurl("⚠"+errorLines.take(10)+"\n로그에서 에러패턴 감지")
+  alarmCurl("⚠"+errorLines.take(10)+"\\n로그에서 에러패턴 감지")
 } else {
   manager.addBadge("success.gif", "에러가 발견되지 않았습니다")
   manager.listener.logger.println("에러가 발견되지 않았습니다")
 }
 
 
-def matcher = manager.getLogMatcher(".*Exec exit status not zero\\. Status \\[(\\d+)\\].*")
+def matcher = manager.getLogMatcher(".*Exec exit status not zero\\\. Status \\\[(\\\d+)\\\].*")
 if (matcher?.matches()) {
 def exitCode = Integer.parseInt(matcher.group(1))
   if (exitCode != 0) {
