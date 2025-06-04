@@ -73,8 +73,10 @@ sleep 5
     }
 
     if (config.remoteTrigger) {
-      genericTrigger {
-        token(config.remoteTrigger.token ?: 'api-batch-trigger-1')
+      trigger {
+        genericTrigger {
+          token(config.remoteTrigger.token ?: 'api-batch-trigger-1')
+        }
       }
     }
 
