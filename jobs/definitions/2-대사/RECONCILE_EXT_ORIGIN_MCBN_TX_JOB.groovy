@@ -32,7 +32,7 @@ scheduleTemplate.job(this, [
     targetJobName : '(test) 2-원천사거래대사-20-상품권(RECONCILE_EXT_ORIGIN_MCBN_TX_JOB)',
     trigger : '* 4 * * *',
     parameters : [
-        'serviceCode', 'originalCompanyInstitutionCode', 'date'
+        'serviceCode', 'originalCompanyInstitutionCode'
     ], 
     stages: [
         [name: '도서문화상품권', values: ['BOOK_AND_LIFE', 'BOOK_AND_LIFE']],
