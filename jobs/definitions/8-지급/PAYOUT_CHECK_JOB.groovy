@@ -27,6 +27,6 @@ batchTemplate.job(this, [
                 value : '$POUT_SCHE_DT'
             ]
         ]
-    ]
+    ],
     view : '8-지급'
 ])
