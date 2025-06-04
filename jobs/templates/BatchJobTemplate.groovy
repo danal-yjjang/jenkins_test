@@ -137,26 +137,21 @@ sleep 60
     }
   }
 
+  // view 생성 또는 업데이트    
   if (config.view) {
-    // 단일 view인 경우와 여러 view인 경우 모두 처리
-    def views = config.view instanceof List ? config.view : [config.view]
-    
-    views.each { viewName ->
-      // List View 생성 또는 업데이트
-      dslFactory.listView(viewName) {
-        description("Auto-generated view for ${viewName}")
-        jobs {
-          name(config.name)
-        }
-        columns {
-          status()
-          weather()
-          name()
-          lastSuccess()
-          lastFailure()
-          lastDuration()
-          buildButton()
-        }
+    dslFactory.listView(config.view) {
+      description("Auto-generated view for ${config.view}")
+      jobs {
+        name(config.name)
+      }
+      columns {
+        status()
+        weather()
+        name()
+        lastSuccess()
+        lastFailure()
+        lastDuration()
+        buildButton()
       }
     }
   }
