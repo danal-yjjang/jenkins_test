@@ -8,6 +8,8 @@ def job (dslFactory, Map config) {
     }
   }
 
+  def java_options = config.javaOption ?: "-Xms256m -Xmx1G -XX:MaxMetaspaceSize=512m"
+
   def batchExecCommand = """
 cd /home/service/smart-settlement-batch
 max_dir=\$(ls -d */ | grep -E '^[0-9]+/\$' | tr -d '/' | sort -n | tail -n 1)
@@ -18,7 +20,7 @@ ${paramScript}
 
 echo "\$PARAMS"
 
-java -Xms256m -Xmx1G -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/home/logs/ -XX:MaxMetaspaceSize=512m -jar /home/service/smart-settlement-batch/\${max_dir}/*.jar --job.name=${config.jobName}\${PARAMS}
+java ${java_options} -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/home/logs/ -jar /home/service/smart-settlement-batch/\${max_dir}/*.jar --job.name=${config.jobName}\${PARAMS}
 
 exitCodeJava=\$?
 echo ">>>>>>>>>>>>>>>> 프로세스를 종료합니다 - \$exitCodeJava"
