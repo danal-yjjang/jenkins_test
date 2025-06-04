@@ -75,7 +75,7 @@ sleep 5
     if (config.remoteTrigger) {
       triggers {
         genericTrigger {
-          token(config.remoteTrigger.token ?: 'api-batch-trigger-1')
+          token(config.remoteTrigger.token ?: "api-batch-trigger-1")
         }
       }
     }
