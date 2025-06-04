@@ -72,6 +72,12 @@ sleep 5
       daysToKeep(3)
     }
 
+    if (config.remoteTrigger) {
+      genericTrigger {
+        token(config.remoteTrigger.token ?: 'api-batch-trigger-1')
+      }
+    }
+
     // 빌드환경 설정
     wrappers {
       timestamps() // 콘솔 출력에 타임스탬프 추가
