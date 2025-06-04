@@ -66,18 +66,11 @@ sleep 60
       numToKeep(20)
     }
 
-    
+     // Trigger 
     if (config.trigger) {
-      properties {
-        // Trigger 
-        pipelineTriggers {
-          triggers {
-            cron {
-              spec(config.trigger)
-            }
-          }   
-        }
-      }   
+      triggers {
+        cron(config.trigger)
+      }
     }
 
     // 빌드환경 설정
