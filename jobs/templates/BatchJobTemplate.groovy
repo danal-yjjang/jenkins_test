@@ -99,11 +99,11 @@ sleep 60
         }
       }
 
-      // 후속 projects 빌드 유발발
+      // 후속 projects 빌드 유발
       if (config.afterJobs) {
         downstreamParameterized {
           config.afterJobs.each { afterJob ->
-            trigger(afterJob) {
+            trigger(afterJob.jobName) {
               condition (afterJob.condition ?: 'SUCCESS') 
               // SUCCESS, UNSTABLE_OR_BETTER, FAILURE, UNSTABLE_OR_WORSE, ALWAYS 
 
