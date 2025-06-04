@@ -21,10 +21,12 @@ batchTemplate.job(this, [
         [
             jobName : '8-가맹점지급-02-지급임시테이블생성(PAYOUT_TEMPORARY_DATA_CREATE_JOB)', 
             currentParam : true, 
-            prarms : [
-                type : 'predefined', 
-                name : 'POUT_SCHE_DT', 
-                value : '$POUT_SCHE_DT'
+            parameters : [
+                [
+                    type : 'predefined', 
+                    name : 'POUT_SCHE_DT', 
+                    value : '$POUT_SCHE_DT'
+                ]
             ]
         ]
     ],
