@@ -75,7 +75,7 @@ sleep 5
     if (config.remoteTrigger) {
       properties {
         configure { props ->
-          def authToken = config.remoteTrigger.token ?: "api-batch-trigger-1"
+          def authToken = config.remoteTriggerToken ?: "api-batch-trigger-1"
           props.appendNode('authToken', authToken)
         }
       }
