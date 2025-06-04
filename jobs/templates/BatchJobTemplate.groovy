@@ -98,6 +98,33 @@ sleep 60
           }
         }
       }
+
+      // 후속 projects 빌드 유발발
+      if (config.afterJobs) {
+        config.afterJobs.each { afterJob ->
+          trigger(afterJob) {
+            condition (afterJob.condition ?: 'SUCCESS') 
+            // SUCCESS, UNSTABLE_OR_BETTER, FAILURE, UNSTABLE_OR_WORSE, ALWAYS 
+
+            parameters {
+              // 현재 빌드 파라미터 전달달
+              if (afterJob.currentParam != false) {
+                currentBuild()
+              }
+              // 추가 param
+              if (afterJob. parameters) {
+                afterJob. parameters.each { param -> 
+                  switch(param.type) {
+                    case 'predefined':
+                      predefinedProp(param.name, param.value)
+                      break
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
       
       // Groovy Postbuild 스크립트 추가
       groovyPostBuild {

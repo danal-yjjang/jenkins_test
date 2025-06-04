@@ -1,5 +1,5 @@
 def batchTemplate = evaluate(readFileFromWorkspace('jobs/templates/BatchJobTemplate.groovy'))
-def batchScheduleTemplate = evaluate(readFileFromWorkspace('jobs/templates/ScheduleJobTemplate.groovy'))
+def scheduleTemplate = evaluate(readFileFromWorkspace('jobs/templates/ScheduleJobTemplate.groovy'))
 
 batchTemplate.job(this, [
     name : '(test) 2-원천사거래대사-20-상품권(RECONCILE_EXT_ORIGIN_MCBN_TX_JOB)', 
@@ -22,12 +22,11 @@ batchTemplate.job(this, [
             name : 'date',
             description : '날짜'
         ]
-    ], 
-    trigger : '* 4 * * *',
+    ],
     view : '2-대사'
 ])
 
-batchScheduleTemplate.job(this, [
+scheduleTemplate.job(this, [
     name : '(test) 2-원천사거래대사-20-상품권(RECONCILE_EXT_ORIGIN_MCBN_TX_JOB)-스케줄',
     targetJobName : '(test) 2-원천사거래대사-20-상품권(RECONCILE_EXT_ORIGIN_MCBN_TX_JOB)',
     trigger : '* 4 * * *',

@@ -19,7 +19,6 @@ template.job(this, [
             name : 'max'
         ]
     ], 
-    view : '1-거래내역생성', 
-    remoteTrigger : true
+    view : '1-거래내역생성'
 ])
 
