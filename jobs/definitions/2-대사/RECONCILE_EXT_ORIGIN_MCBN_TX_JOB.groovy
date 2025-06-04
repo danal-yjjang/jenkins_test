@@ -23,6 +23,7 @@ batchTemplate.job(this, [
             description : '날짜'
         ]
     ], 
+    trigger : '* 4 * * *',
     view : '2-대사'
 ])
 

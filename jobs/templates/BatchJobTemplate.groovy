@@ -66,6 +66,20 @@ sleep 60
       numToKeep(20)
     }
 
+    
+    if (config.trigger) {
+      properties {
+        // Trigger 
+        pipelineTriggers {
+          triggers {
+            cron {
+              spec(config.trigger)
+            }
+          }   
+        }
+      }   
+    }
+
     // 빌드환경 설정
     wrappers {
       timestamps() // 콘솔 출력에 타임스탬프 추가

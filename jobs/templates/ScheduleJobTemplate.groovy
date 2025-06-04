@@ -52,21 +52,17 @@ def listGenerate(${config.parameters ? config.parameters.collect {param ->
         // 동시 빌드 방지 설정        
         disableConcurrentBuilds()
 
-        pipelineTriggers {
-            triggers {
-                cron {
-                    spec(config.trigger)
-                }
+        // Trigger 
+        if (config.trigger) {
+            pipelineTriggers {
+                triggers {
+                    cron {
+                        spec(config.trigger)
+                    }
+                }   
             }
         }
     }
-
-    // // Trigger
-    // if (config.trigger) {
-    //     triggers {
-    //         cron(config.trigger)
-    //     }
-    // }
 
     // pipeline
     definition {
