@@ -35,9 +35,9 @@ scheduleTemplate.job(this, [
         'serviceCode', 'originalCompanyInstitutionCode', 'date'
     ], 
     stages: [
-        [name: '도서문화상품권', values: ['BOOK_AND_LIFE', 'BOOK_AND_LIFE', 'YDATE']],
-        [name: '컬쳐랜드상품권', values: ['CULTURE_LAND', 'CULTURE_LAND', 'YDATE']],
-        [name: '(주)문화상품권', values: ['CULTURE_GIFT', 'CULTURE_GIFT', 'YDATE']]
+        [name: '도서문화상품권', values: ['BOOK_AND_LIFE', 'BOOK_AND_LIFE']],
+        [name: '컬쳐랜드상품권', values: ['CULTURE_LAND', 'CULTURE_LAND']],
+        [name: '(주)문화상품권', values: ['CULTURE_GIFT', 'CULTURE_GIFT']]
     ],
     view : '2-대사'
 ])
