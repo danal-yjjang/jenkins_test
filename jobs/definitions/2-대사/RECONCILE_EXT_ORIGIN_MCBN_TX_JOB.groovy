@@ -20,6 +20,7 @@ batchTemplate.job(this, [
         [
             type : 'string', 
             name : 'date',
+            defaultValue : '$(date +"%Y-%m-%d")',
             description : '날짜'
         ]
     ],

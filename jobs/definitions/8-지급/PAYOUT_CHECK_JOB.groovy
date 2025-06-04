@@ -13,7 +13,7 @@ batchTemplate.job(this, [
             type : 'string', 
             name : 'poutExecDttm',
             description : '날짜', 
-            defaultValue : 'TDAY'
+            defaultValue : '\$(date +"%Y-%m-%d %H:%M:%S")'
         ]
     ], 
     trigger : '30 7 * * *',

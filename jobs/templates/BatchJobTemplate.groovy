@@ -12,9 +12,6 @@ def job (dslFactory, Map config) {
 cd /home/service/smart-settlement-batch
 max_dir=\$(ls -d */ | grep -E '^[0-9]+/\$' | tr -d '/' | sort -n | tail -n 1)
 echo ">>>>>>>>>>>>>>>> 최대 수의 디렉터리 : \$max_dir....."    
-
-TDATE = '\$BUILD_TIMESTAMP'
-TDATE = \${TDATE:0:10}
   
 PARAMS = ""
 ${paramScript}
