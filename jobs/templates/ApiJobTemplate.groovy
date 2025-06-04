@@ -8,7 +8,7 @@ def job (dslFactory, Map config) {
     }
   }
 
-  def batchExecCommand = """
+  def apiExecCommand = """
 cd /home/service/smart-settlement-batch
 max_dir=\$(ls -d */ | grep -E '^[0-9]+/\$' | tr -d '/' | sort -n | tail -n 1)
 echo ">>>>>>>>>>>>>>>> 최대 수의 디렉터리 : \$max_dir....."    
@@ -97,12 +97,41 @@ sleep 5
       // SSH
       publishOverSsh {
         server(config.serverName ?: '배치실행서버') {
-          verbose(true) // console log 출력력
+          verbose(true) // console log 출력
           transferSet {
             sourceFiles('')
             removePrefix('')
             remoteDirectory('')
-            execCommand(batchExecCommand)
+            execCommand(apiExecCommand)
+          }
+        }
+      }
+
+      // 후속 projects 빌드 유발
+      if (config.afterJobs) {
+        downstreamParameterized {
+          config.afterJobs.each { afterJob ->
+            trigger(afterJob.jobName) {
+              condition (afterJob.condition ?: 'SUCCESS') 
+              // SUCCESS, UNSTABLE_OR_BETTER, FAILURE, UNSTABLE_OR_WORSE, ALWAYS 
+
+              parameters {
+                // 현재 빌드 파라미터 전달달
+                if (afterJob.currentParam != false) {
+                  currentBuild()
+                }
+                // 추가 param
+                if (afterJob. parameters) {
+                  afterJob. parameters.each { param -> 
+                    switch(param.type) {
+                      case 'predefined':
+                        predefinedProp(param.name, param.value)
+                        break
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }

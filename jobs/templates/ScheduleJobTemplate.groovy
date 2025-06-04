@@ -5,15 +5,12 @@ def job (dslFactory, Map config) {
 pipeline {
     agent { node { label 'ScheduleNode' } }
 
-    environment {
-        DATE = ${getFormatterDate()}
-    }
     stages {
 ${config.stages ? config.stages.collect { stage ->
     return """        stage('${stage.name}') {
             steps {
                 script {
-                    listGenerate(${stage.values ? stage.values.collect {  it == 'DATE' ? "${it}" : "'${it}'" }.join(', ') : ''})    
+                    listGenerate(${stage.values ? stage.values.collect { "'${it}'" }.join(', ') : ''})    
                 }
             }
         }"""
@@ -98,15 +95,6 @@ def listGenerate(${config.parameters ? config.parameters.collect {param ->
   }
 
   return job
-}
-
-static getFormatterDate () {
-    def yesterday = new Date().minus(1)
-    def timeZone = TimeZone.getTimeZone('Asia/Seoul')
-    def dateFormat = new java.text.SimpleDateFormat('yyyy-MM-dd')
-    dateFormat.setTimeZone(timeZone)
-    def formattedDate = dateFormat.format(yesterday)
-    return dateFormat.format(yesterday)
 }
 
 return this

@@ -20,14 +20,7 @@ batchTemplate.job(this, [
     afterJobs : [
         [
             jobName : '8-가맹점지급-02-지급임시테이블생성(PAYOUT_TEMPORARY_DATA_CREATE_JOB)', 
-            currentParam : true, 
-            parameters : [
-                [
-                    type : 'predefined', 
-                    name : 'POUT_SCHE_DT', 
-                    value : '$POUT_SCHE_DT'
-                ]
-            ]
+            currentParam : true
         ]
     ],
     view : '8-지급'
