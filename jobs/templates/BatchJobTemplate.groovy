@@ -91,7 +91,7 @@ sleep 60
       // SSH
       publishOverSsh {
         server(config.serverName ?: '배치실행서버') {
-          verbose(true) // console log 출력력
+          verbose(true) // console log 출력
           transferSet {
             sourceFiles('')
             removePrefix('')
@@ -110,7 +110,7 @@ sleep 60
               // SUCCESS, UNSTABLE_OR_BETTER, FAILURE, UNSTABLE_OR_WORSE, ALWAYS 
 
               parameters {
-                // 현재 빌드 파라미터 전달달
+                // 현재 빌드 파라미터 전달
                 if (afterJob.currentParam != false) {
                   currentBuild()
                 }
