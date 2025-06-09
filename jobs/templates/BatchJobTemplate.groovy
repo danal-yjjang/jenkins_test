@@ -8,7 +8,6 @@ def job (dslFactory, Map config) {
     }
   }
 
-  def env = manager.build.getEnvironment(manager.listener)
   def java_options = config.javaOption ?: "\${env.JAVA_DEFAULT_OPTION}"
 
   def batchExecCommand = """
