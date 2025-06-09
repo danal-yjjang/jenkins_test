@@ -1,14 +1,13 @@
 import jenkins.model.*
 import hudson.slaves.EnvironmentVariablesNodeProperty
 
-@Field static Map<String, String> globalEnvVars = null
+static final Map<String, String> globalEnvVars
 
-static Map<String, String> getGlobalEnvironmentVariables() {
-   def jenkins = Jenkins.getInstance()
-    globalEnvVars = jenkins.getGlobalNodeProperties()
-      .find { it instanceof EnvironmentVariablesNodeProperty }
-      ?.getEnvVars() ?: [:]
-    return globalEnvVars
+static {
+  def jenkins = Jenkins.getInstance()
+  globalEnvVars = jenkins.getGlobalNodeProperties()
+    .find { it instanceof EnvironmentVariablesNodeProperty }
+    ?.getEnvVars() ?: [:]
 }
 
 static String getEnvValue(String key, String defaultValue = null) {
