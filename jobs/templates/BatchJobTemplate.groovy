@@ -8,7 +8,7 @@ def job (dslFactory, Map config) {
     }
   }
 
-  def java_options = config.javaOption ?: "-Xms256m -Xmx1G -XX:MaxMetaspaceSize=512m"
+  def java_options = config.javaOption ?: env['ALARM_APPENDER']
 
   def batchExecCommand = """
 cd /home/service/smart-settlement-batch
