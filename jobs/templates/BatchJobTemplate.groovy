@@ -8,7 +8,7 @@ def job (dslFactory, Map config) {
     }
   }
 
-  def java_options = config.javaOption ?: "${env.JAVA_DEFAULT_OPTION}" 
+  def java_options = config.javaOption ?: (env['JAVA_DEFAULT_OPTION'] ?: "-Xms256m -Xmx1G -XX:MaxMetaspaceSize=512m")
 
   def batchExecCommand = """
 cd /home/service/smart-settlement-batch
