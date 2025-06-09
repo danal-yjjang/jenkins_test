@@ -8,7 +8,7 @@ def job (dslFactory, Map config) {
     }
   }
 
-  def java_options = config.javaOption ?: env['ALARM_APPENDER']
+  def java_options = config.javaOption ?: ${env.JAVA_DEFAULT_OPTION} 
 
   def batchExecCommand = """
 cd /home/service/smart-settlement-batch
