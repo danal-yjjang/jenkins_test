@@ -1,3 +1,11 @@
+import jenkins.model.*
+import hudson.slaves.EnvironmentVariablesNodeProperty
+
+def jenkins = Jenkins.getInstance()
+def globalEnvVars = jenkins.getGlobalNodeProperties()
+    .find { it instanceof EnvironmentVariablesNodeProperty }
+    ?.getEnvVars()
+
 def job (dslFactory, Map config) {
 
   def paramScript = ""
@@ -8,7 +16,7 @@ def job (dslFactory, Map config) {
     }
   }
 
-  def java_options = config.javaOption ?: env.JAVA_DEFAULT_OPTION
+  def java_options = config.javaOption ?: (globalEnvVars?.get('JAVA_DEFAULT_OPTION') ?: '-Xms256m -Xmx1G -XX:MaxMetaspaceSize=512m')
 
   def batchExecCommand = """
 cd /home/service/smart-settlement-batch
