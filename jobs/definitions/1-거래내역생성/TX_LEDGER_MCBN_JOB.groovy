@@ -19,6 +19,6 @@ template.job(this, [
             name : 'max'
         ]
     ], 
-    view : '1-거래내역생성'
+    view : 'test'
 ])
 

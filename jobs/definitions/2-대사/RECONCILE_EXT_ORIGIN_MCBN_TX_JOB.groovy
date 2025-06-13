@@ -24,7 +24,7 @@ batchTemplate.job(this, [
             description : '날짜'
         ]
     ],
-    view : '2-대사'
+    view : 'test'
 ])
 
 scheduleTemplate.job(this, [
@@ -39,6 +39,6 @@ scheduleTemplate.job(this, [
         [name: '컬쳐랜드상품권', values: ['CULTURE_LAND', 'CULTURE_LAND', '\$(date -d "yesterday" +"%Y-%m")']],
         [name: '(주)문화상품권', values: ['CULTURE_GIFT', 'CULTURE_GIFT', '\$(date -d "yesterday" +"%Y-%m")']]
     ],
-    view : '2-대사'
+    view : 'test'
 ])
 
