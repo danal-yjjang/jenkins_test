@@ -148,17 +148,7 @@ sleep 60
   // view 생성 또는 업데이트    
    // view 생성 또는 업데이트 - 수정된 부분
   if (config.view) {
-    // 기존 view가 있는지 확인
-    def existingView = Jenkins.getInstance().getView(config.view)
-    
-    if (existingView) {
-      // 기존 view가 있으면 job만 추가
-      dslFactory.listView(config.view) {
-        jobs {
-          name(config.name)
-        }
-      }
-    } else {
+  
       // 새로운 view 생성
       dslFactory.listView(config.view) {
         description("Auto-generated view for ${config.view}")
@@ -175,7 +165,7 @@ sleep 60
           buildButton()
         }
       }
-    }
+
   }
 
   return job
