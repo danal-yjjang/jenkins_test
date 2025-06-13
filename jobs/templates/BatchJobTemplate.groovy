@@ -148,6 +148,17 @@ sleep 60
   // view 생성 또는 업데이트    
    // view 생성 또는 업데이트 - 수정된 부분
   if (config.view) {
+
+      def existingView = jenkins.getView(config.view)
+      if (existingView) {
+        dslFactory.listView(config.view) {
+          jobs {
+            name(config.name)
+          }
+        }
+      } else {
+
+      
   
       // 새로운 view 생성
       dslFactory.listView(config.view) {
@@ -164,6 +175,7 @@ sleep 60
           lastDuration()
           buildButton()
         }
+      }
       }
 
   }
